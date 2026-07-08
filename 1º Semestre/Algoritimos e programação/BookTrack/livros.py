@@ -11,9 +11,9 @@ Variáveis principais deste módulo:
                           titulo          (string)
                           autor           (string)
                           editora         (string)
-                          edicao          (string)
+                          edicao          (int)
                           ano             (int)
-                          isbn            (string)
+                          isbn            (int)
                           status          (string)  ex: "Lendo", "Lido", "Quero ler"
                           paginas_totais  (int)
                           paginas_lidas   (int)
@@ -23,16 +23,17 @@ import arquivos
 
 
 def cadastrar_livro(livros: list, titulo: str, autor: str, editora: str,
-                     edicao: str, ano: int, isbn: str, status: str,
+                     edicao: int, ano: int, isbn: int, status: str,
                      paginas_totais: int, paginas_lidas: int = 0) -> bool:
     """
     Responsabilidade: Cadastrar um novo livro no vetor de livros,
                        impedindo ISBN duplicado.
     Entradas:
         livros (list): vetor de livros já carregado em memória
-        titulo (string), autor (string), editora (string), edicao (string)
+        titulo (string), autor (string), editora (string)
+        edicao (int): número da edição
         ano (int): ano de publicação
-        isbn (string): identificador único do livro
+        isbn (int): identificador numérico único do livro
         status (string): situação de leitura
         paginas_totais (int): total de páginas do livro
         paginas_lidas (int, opcional): páginas já lidas (padrão 0)
@@ -46,9 +47,9 @@ def cadastrar_livro(livros: list, titulo: str, autor: str, editora: str,
         "titulo": titulo,
         "autor": autor,
         "editora": editora,
-        "edicao": edicao,
+        "edicao": str(edicao),
         "ano": str(ano),
-        "isbn": isbn,
+        "isbn": str(isbn),
         "status": status,
         "paginas_totais": str(paginas_totais),
         "paginas_lidas": str(paginas_lidas),
@@ -58,22 +59,22 @@ def cadastrar_livro(livros: list, titulo: str, autor: str, editora: str,
     return True
 
 
-def buscar_livro_por_isbn(livros: list, isbn: str) -> dict:
+def buscar_livro_por_isbn(livros: list, isbn: int) -> dict:
     """
     Responsabilidade: Localizar um livro dentro do vetor a partir do ISBN.
     Entradas:
         livros (list): vetor de livros
-        isbn (string): ISBN a ser localizado
+        isbn (int): ISBN a ser localizado
     Saídas:
         dict ou None: dicionário do livro encontrado, ou None se não existir
     """
     for livro in livros:
-        if livro["isbn"] == isbn:
+        if livro["isbn"] == str(isbn):
             return livro
     return None
 
 
-def editar_livro(livros: list, isbn: str, novo_status: str = None,
+def editar_livro(livros: list, isbn: int, novo_status: str = None,
                   novas_paginas_lidas: int = None) -> bool:
     """
     Responsabilidade: Atualizar os dados de um livro já cadastrado
@@ -81,7 +82,7 @@ def editar_livro(livros: list, isbn: str, novo_status: str = None,
                        Campos não informados (None) permanecem inalterados.
     Entradas:
         livros (list): vetor de livros
-        isbn (string): ISBN do livro a ser editado
+        isbn (int): ISBN do livro a ser editado
         novo_status (string, opcional): novo status de leitura
         novas_paginas_lidas (int, opcional): nova contagem de páginas lidas
     Saídas:
@@ -100,12 +101,12 @@ def editar_livro(livros: list, isbn: str, novo_status: str = None,
     return True
 
 
-def remover_livro(livros: list, isbn: str) -> bool:
+def remover_livro(livros: list, isbn: int) -> bool:
     """
     Responsabilidade: Remover um livro do vetor de livros.
     Entradas:
         livros (list): vetor de livros
-        isbn (string): ISBN do livro a ser removido
+        isbn (int): ISBN do livro a ser removido
     Saídas:
         bool: True se removido com sucesso; False se o livro não existia
     """
@@ -132,6 +133,7 @@ def listar_livros(livros: list):
     print("\n--- Lista de Livros ---")
     for livro in livros:
         print(f"Título: {livro['titulo']} | Autor: {livro['autor']} | "
+              f"ISBN: {livro['isbn']} | Edição: {livro['edicao']} | "
               f"Status: {livro['status']} | "
               f"Páginas: {livro['paginas_lidas']}/{livro['paginas_totais']}")
     print("-----------------------\n")

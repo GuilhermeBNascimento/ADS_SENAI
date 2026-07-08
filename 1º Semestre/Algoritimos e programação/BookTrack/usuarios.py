@@ -49,7 +49,9 @@ def registrar_usuario(usuarios: list, nome: str, username: str,
 def buscar_usuario_por_username(usuarios: list, username: str) -> dict:
     """
     Responsabilidade: Localizar um usuário dentro do vetor a partir do
-                       seu username.
+                       seu username, sem diferenciar maiúsculas de
+                       minúsculas (ex.: "Felipe" e "felipe" são o mesmo
+                       usuário).
     Entradas:
         usuarios (list): vetor de usuários
         username (string): username a ser localizado
@@ -57,7 +59,7 @@ def buscar_usuario_por_username(usuarios: list, username: str) -> dict:
         dict ou None: dicionário do usuário encontrado, ou None se não existir
     """
     for usuario in usuarios:
-        if usuario["username"] == username:
+        if usuario["username"].lower() == username.lower():
             return usuario
     return None
 
@@ -84,9 +86,10 @@ def editar_usuario(usuarios: list, username: str, novo_nome: str = None,
     if usuario is None:
         return "nao_encontrado"
 
-    if novo_username and novo_username != usuario["username"]:
-        if buscar_usuario_por_username(usuarios, novo_username) is not None:
-            return "username_em_uso"
+    if novo_username:
+        if novo_username.lower() != usuario["username"].lower():
+            if buscar_usuario_por_username(usuarios, novo_username) is not None:
+                return "username_em_uso"
         usuario["username"] = novo_username
 
     if novo_nome:

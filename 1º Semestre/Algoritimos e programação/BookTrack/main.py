@@ -121,10 +121,10 @@ def menu_livros(lista_livros: list):
             titulo = validacoes.ler_texto_obrigatorio("Título: ")
             autor = validacoes.ler_texto_obrigatorio("Autor: ")
             editora = validacoes.ler_texto_obrigatorio("Editora: ")
-            edicao = validacoes.ler_texto_obrigatorio("Edição: ")
+            edicao = validacoes.ler_inteiro("Edição (número): ", minimo=1)
             ano = validacoes.ler_inteiro("Ano: ", minimo=1000, maximo=2100)
-            isbn = validacoes.ler_texto_obrigatorio("ISBN: ")
-            status = validacoes.ler_texto_obrigatorio("Status (Lendo/Lido/Quero ler): ")
+            isbn = validacoes.ler_inteiro("ISBN (somente números): ", minimo=1)
+            status = validacoes.ler_status_livro("Status (Lendo/Lido/Quero ler): ")
             paginas_totais = validacoes.ler_inteiro("Páginas totais: ", minimo=1)
             paginas_lidas = validacoes.ler_inteiro(
                 "Páginas já lidas (0 se ainda não começou): ",
@@ -143,8 +143,9 @@ def menu_livros(lista_livros: list):
             livros.listar_livros(lista_livros)
 
         elif opcao == "3":
-            isbn = input("ISBN do livro: ").strip()
-            novo_status = input("Novo status (Enter para manter): ").strip() or None
+            isbn = validacoes.ler_inteiro("ISBN do livro: ")
+            novo_status = validacoes.ler_status_livro_opcional(
+                "Novo status (Lendo/Lido/Quero ler, Enter para manter): ")
             resposta_paginas = input("Novas páginas lidas (Enter para manter): ").strip()
             novas_paginas = validacoes.ler_inteiro("Confirme as páginas lidas: ", minimo=0) \
                 if resposta_paginas else None
@@ -154,7 +155,7 @@ def menu_livros(lista_livros: list):
                 print("Livro não encontrado.")
 
         elif opcao == "4":
-            isbn = input("ISBN do livro a remover: ").strip()
+            isbn = validacoes.ler_inteiro("ISBN do livro a remover: ")
             if livros.remover_livro(lista_livros, isbn):
                 print("Livro removido com sucesso.")
             else:

@@ -10,6 +10,8 @@ Responsabilidade: Centralizar a validação de dados digitados pelo usuário
 
 import datetime
 
+STATUS_VALIDOS = ["Lendo", "Lido", "Quero ler"]
+
 
 def _data_e_valida(dia: int, mes: int, ano: int) -> bool:
     """
@@ -163,6 +165,46 @@ def formatar_data(data_int: int) -> str:
     """
     texto = str(data_int).zfill(8)
     return f"{texto[0:2]}/{texto[2:4]}/{texto[4:8]}"
+
+
+def ler_status_livro(mensagem: str = "Status (Lendo/Lido/Quero ler): ") -> str:
+    """
+    Responsabilidade: Solicitar o status de leitura de um livro como texto,
+                       restringindo o valor aceito a um dos itens de
+                       STATUS_VALIDOS ("Lendo", "Lido", "Quero ler"),
+                       sem diferenciar maiúsculas de minúsculas. Repete a
+                       pergunta enquanto o valor digitado for inválido.
+    Entradas:
+        mensagem (string, opcional): texto exibido ao solicitar o valor
+    Saídas:
+        string: um dos valores de STATUS_VALIDOS (com a grafia padronizada)
+    """
+    while True:
+        entrada = input(mensagem).strip()
+        for valido in STATUS_VALIDOS:
+            if entrada.lower() == valido.lower():
+                return valido
+        print(f"Status inválido. Escolha um dos seguintes: {', '.join(STATUS_VALIDOS)}.")
+
+
+def ler_status_livro_opcional(mensagem: str = "Novo status (Lendo/Lido/Quero ler, Enter para manter): ") -> str:
+    """
+    Responsabilidade: Mesma finalidade de ler_status_livro(), mas permite
+                       deixar em branco para manter o status atual (usado
+                       em telas de edição).
+    Entradas:
+        mensagem (string, opcional): texto exibido ao solicitar o valor
+    Saídas:
+        string ou None: um dos valores de STATUS_VALIDOS, ou None se em branco
+    """
+    while True:
+        entrada = input(mensagem).strip()
+        if not entrada:
+            return None
+        for valido in STATUS_VALIDOS:
+            if entrada.lower() == valido.lower():
+                return valido
+        print(f"Status inválido. Escolha um dos seguintes: {', '.join(STATUS_VALIDOS)}.")
 
 
 def ler_texto_obrigatorio(mensagem: str) -> str:
