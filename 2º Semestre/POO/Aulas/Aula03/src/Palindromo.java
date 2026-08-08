@@ -1,50 +1,29 @@
-import java.util.Scanner;
-
 public class Palindromo {
     public static void main(String[] args) {
-        String palavra;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Digite uma palavra: ");
-        palavra = scanner.nextLine();
-        char[] arrayPalavra = palavra.toLowerCase().toCharArray();
+        String palavra = "Banana";
+        char[] arrayPalavra = palavra.toCharArray();
 
-        char[] arrayPalindromo = new char[arrayPalavra.length];
+        int tamanho = arrayPalavra.length;
 
-        // Criando a palavra invertida
-        for (int i = 0; i < arrayPalavra.length; i++) {
-            arrayPalindromo[i] = arrayPalavra[arrayPalavra.length - 1 - i];
+        char[] arrzyInvertido = new char[tamanho];
+
+        for (int i = 0; i < tamanho; i++) {
+            arrzyInvertido[tamanho - i - 1] = arrayPalavra[i];
         }
-
-        // Mostrando a palavra original
-        System.out.print("Original: ");
-        for (int i = 0; i < arrayPalavra.length; i++) {
-            System.out.print(arrayPalavra[i]);
-        }
-
-        System.out.println();
-
-        // Mostrando a palavra invertida
-        System.out.print("Invertido: ");
-        for (int i = 0; i < arrayPalindromo.length; i++) {
-            System.out.print(arrayPalindromo[i]);
-        }
-
-        System.out.println();
-
-        // Verificando se é palíndromo
-        boolean palindromo = true;
-
-        for (int i = 0; i < arrayPalavra.length; i++) {
-            if (arrayPalavra[i] != arrayPalindromo[i]) {
-                palindromo = false;
+        // comparação
+        boolean ehPalindromo = true;
+        for (int i = 0; i < tamanho; i++) {
+            if (arrzyInvertido[i] != arrayPalavra[i]) {
+                ehPalindromo = false;
                 break;
             }
-        }
 
-        if (palindromo) {
-            System.out.println("É palíndromo!");
-        } else {
-            System.out.println("Não é palíndromo!");
+        }
+        if (ehPalindromo) {
+            System.out.println("È palindromo");
+        }
+        else {
+            System.out.println("Não é palindromo");
         }
     }
 }
