@@ -11,7 +11,7 @@ public class Estudante {
         this.nome = nome;
         this.notas = new ArrayList<>();
     }
-     // metodos sempre proted ou publico
+    // metodos sempre proted ou publico
 
     // nota exame - aprovado ou não
 
@@ -29,10 +29,6 @@ public class Estudante {
         this.notas.add(nota);
     }
 
-    public void addExame(double exame) {
-        this.notas.add(exame);
-    }
-
     protected double getSoma() {
         double soma = 0;
         int i = 0;
@@ -47,16 +43,29 @@ public class Estudante {
         return this.getSoma() / this.notas.size();
     }
 
+    // Coloca a nota do exame
+    public void setExame(double exame) {
+        this.exame = exame;
+    }
+
+    // Retorna a nota do exame
+    public double getExame() {
+        return this.exame;
+    }
+
+    // Verifica se foi aprovado
     public String getAprovado() {
-        if (this.getMedia() >= 6) {
-             this.aprovado = "APROVADO";
-        }
-        else if(this.getMedia() < 6) {
-            System.out.println("Esta em exame");
-            if (this.g)
-        }
-        else {
-             this.aprovado = "REPROVADO";
+
+        if (this.getMedia() >= 7) {
+            this.aprovado = "Aprovado";
+        } else {
+            double mediaExame = (this.getMedia() + this.exame) / 2;
+
+            if (mediaExame >= 6) {
+                this.aprovado = "Aprovado";
+            } else {
+                this.aprovado = "Reprovado";
+            }
         }
         return this.aprovado;
     }

@@ -8,9 +8,10 @@ public class Aprovador {
         pedro.addNota(9.0);
 
         Estudante maria = new Estudante("Maria");
-        maria.addNota(7.0);
+        maria.addNota(3);
         maria.addNota(5.0);
-        maria.addNota(9.0);
+        maria.addNota(4);
+        maria.setExame(10);
 
         //Estudante[] estudantes = new Estudante[] { pedro, maria };
         ArrayList<Estudante> estudantes = new ArrayList<>();
@@ -21,7 +22,7 @@ public class Aprovador {
 
         for (Estudante estudante: estudantes) {
             System.out.println("Media do estudante " + 
-                estudante.getNome() + ":" + estudante.getMedia() + estudante.getAprovado());
+                estudante.getNome() + ":" + estudante.getMedia() + " "+ "Resultado: " + estudante.getAprovado());
         }
 
     }
