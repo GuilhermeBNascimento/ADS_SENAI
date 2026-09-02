@@ -5,7 +5,6 @@ public class Estudante {
     private String nome;
     private ArrayList<Double> notas;
     private double exame;
-    private String aprovado;
 
     public Estudante(String nome) {
         this.nome = nome;
@@ -53,20 +52,19 @@ public class Estudante {
         return this.exame;
     }
 
+    public double getMediaFinal() {
+        return (this.getMedia() + this.exame) / 2;
+    }
+
     // Verifica se foi aprovado
     public String getAprovado() {
 
-        if (this.getMedia() >= 7) {
-            this.aprovado = "Aprovado";
-        } else {
-            double mediaExame = (this.getMedia() + this.exame) / 2;
-
-            if (mediaExame >= 6) {
-                this.aprovado = "Aprovado";
-            } else {
-                this.aprovado = "Reprovado";
-            }
+        if (this.getMedia() >= 6) {
+            return "Aprovado Direto";
         }
-        return this.aprovado;
+        if(this.getMediaFinal() >=6) {
+            return "Aprovado após exame";
+        }
+        return "Reprovado";
     }
 }
